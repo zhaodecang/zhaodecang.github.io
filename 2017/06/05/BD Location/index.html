@@ -9,21 +9,18 @@
   <title>百度定位服务使用过程中的异常信息记录及解决方案 | ﹌赵得C</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Android应用使用百度定位SDK 返回error code : 162 latitude : 4.9E-324 lontitude : 4.9E-324有以下几种情况会导致这种情况的发生(首先要保证按照官方文档配置环境)：
-
-1、官方文档不提供armeabi-v7a文件夹对应的.so文件，所以需要自己新建一个armeabi-v7a文件夹，并从另外一个文件夹里拷贝一个.so文件到该文件夹下，cl">
+- 1、官方文档不提供armeabi-v7a文件夹对应的.so文件，所以需要自己新建一个armeabi-v7a文件夹，并从另外一个文件夹里拷贝一个.so文件到该文件夹下，c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="百度定位服务使用过程中的异常信息记录及解决方案">
 <meta property="og:url" content="https://github.com/zhaodecang/2017/06/05/bd location/index.html">
 <meta property="og:site_name" content="﹌赵得C">
 <meta property="og:description" content="Android应用使用百度定位SDK 返回error code : 162 latitude : 4.9E-324 lontitude : 4.9E-324有以下几种情况会导致这种情况的发生(首先要保证按照官方文档配置环境)：
-
-1、官方文档不提供armeabi-v7a文件夹对应的.so文件，所以需要自己新建一个armeabi-v7a文件夹，并从另外一个文件夹里拷贝一个.so文件到该文件夹下，cl">
-<meta property="og:updated_time" content="2017-06-05T13:32:05.731Z">
+- 1、官方文档不提供armeabi-v7a文件夹对应的.so文件，所以需要自己新建一个armeabi-v7a文件夹，并从另外一个文件夹里拷贝一个.so文件到该文件夹下，c">
+<meta property="og:updated_time" content="2017-06-05T13:38:00.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="百度定位服务使用过程中的异常信息记录及解决方案">
 <meta name="twitter:description" content="Android应用使用百度定位SDK 返回error code : 162 latitude : 4.9E-324 lontitude : 4.9E-324有以下几种情况会导致这种情况的发生(首先要保证按照官方文档配置环境)：
-
-1、官方文档不提供armeabi-v7a文件夹对应的.so文件，所以需要自己新建一个armeabi-v7a文件夹，并从另外一个文件夹里拷贝一个.so文件到该文件夹下，cl">
+- 1、官方文档不提供armeabi-v7a文件夹对应的.so文件，所以需要自己新建一个armeabi-v7a文件夹，并从另外一个文件夹里拷贝一个.so文件到该文件夹下，c">
   
     <link rel="alternative" href="/atom.xml" title="﹌赵得C" type="application/atom+xml">
   
@@ -188,18 +185,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="Android应用使用百度定位SDK-返回error-code-162-latitude-4-9E-324-lontitude-4-9E-324"><a href="#Android应用使用百度定位SDK-返回error-code-162-latitude-4-9E-324-lontitude-4-9E-324" class="headerlink" title="Android应用使用百度定位SDK 返回error code : 162 latitude : 4.9E-324 lontitude : 4.9E-324"></a>Android应用使用百度定位SDK 返回error code : 162 latitude : 4.9E-324 lontitude : 4.9E-324</h3><p>有以下几种情况会导致这种情况的发生(首先要保证按照官方文档配置环境)：</p>
-<ul>
-<li>1、官方文档不提供armeabi-v7a文件夹对应的.so文件，所以需要自己新建一个armeabi-v7a文件夹，并从另外一个文件夹里拷贝一个.so文件到该文件夹下，clean项目，再次编译即可成功！</li>
-<li>2、网络不好、联网失败之类的导致了定位没有成功，换到环境开阔的地方问题解决；注意室内也有可能定位失败；</li>
-<li>3、API_KEY不正确，注意开发的时候用的key是发布的key，导致了这个错误，将key换过来后问题解决；</li>
-<li>4、创建应用时填写的sha1值不正确，如果换了电脑或者重装了系统，导致sha1值前后不一致也会出现该情况；<br>笔者是第四种情况，解决方式是重新填写sha1值(sha1值获取方式见###<a href="http://lbsyun.baidu.com/index.php?title=android-locsdk/guide/key#.E7.94.B3.E8.AF.B7.E9.85.8D.E7.BD.AEAK.E6.AD.A5.E9.AA.A4" target="_blank" rel="external">获取SHA1值的正确姿势</a>###)</li>
-</ul>
+<pre><code>- 1、官方文档不提供armeabi-v7a文件夹对应的.so文件，所以需要自己新建一个armeabi-v7a文件夹，并从另外一个文件夹里拷贝一个.so文件到该文件夹下，clean项目，再次编译即可成功！
+- 2、网络不好、联网失败之类的导致了定位没有成功，换到环境开阔的地方问题解决；注意室内也有可能定位失败；
+- 3、API_KEY不正确，注意开发的时候用的key是发布的key，导致了这个错误，将key换过来后问题解决；
+- 4、创建应用时填写的sha1值不正确，如果换了电脑或者重装了系统，导致sha1值前后不一致也会出现该情况；
+</code></pre><p>笔者是第四种情况，解决方式是重新填写sha1值(sha1值获取方式见###<a href="http://lbsyun.baidu.com/index.php?title=android-locsdk/guide/key#.E7.94.B3.E8.AF.B7.E9.85.8D.E7.BD.AEAK.E6.AD.A5.E9.AA.A4" target="_blank" rel="external">获取SHA1值的正确姿势</a>###)</p>
 <h3 id="定位失败错误码返回167（BDLocation-TypeServerError）"><a href="#定位失败错误码返回167（BDLocation-TypeServerError）" class="headerlink" title="定位失败错误码返回167（BDLocation.TypeServerError）"></a>定位失败错误码返回167（BDLocation.TypeServerError）</h3><p>出现此种情况说明百度定位服务注册已经没问题了，问题的根源是服务端定位失败，解决方案：</p>
-<ul>
-<li>1、请您检查是否禁用获取位置信息权限，尝试重新请求定位；</li>
-<li>2、如果是使用模拟器做开发测试，请确保已经打开群定位服务并且发送模拟的经纬度信息。</li>
-</ul>
-
+<pre><code>- 1、请您检查是否禁用获取位置信息权限，尝试重新请求定位；
+- 2、如果是使用模拟器做开发测试，请确保已经打开群定位服务并且发送模拟的经纬度信息。
+</code></pre>
       
 
       
