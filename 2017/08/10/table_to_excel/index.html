@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="﹌赵得C">
 <meta property="og:description" content="自定义JavaScript函数实现&amp;lt;input type=&amp;quot;button&amp;quot; name=&amp;quot;out_excel&amp;quot; onClick=&amp;quot;AutomateExcel();&amp;quot; value=&amp;quot;导出到excel&amp;quot; class=&amp;quot;notPrint&amp;quot;/&amp;gt;
 &amp;lt;script language=&amp;quot;">
-<meta property="og:updated_time" content="2017-08-10T14:50:24.612Z">
+<meta property="og:updated_time" content="2017-08-10T14:56:12.063Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="将Html中表格数据导出为Excel">
 <meta name="twitter:description" content="自定义JavaScript函数实现&amp;lt;input type=&amp;quot;button&amp;quot; name=&amp;quot;out_excel&amp;quot; onClick=&amp;quot;AutomateExcel();&amp;quot; value=&amp;quot;导出到excel&amp;quot; class=&amp;quot;notPrint&amp;quot;/&amp;gt;
@@ -197,35 +197,31 @@
                 appExcel.Workbooks.Add().Worksheets.Item(1).Paste();
                 appExcel = null;
         } catch (e) {
-            alert(&quot;无法调用Office对象，请确保您的机器已安装了Office并已将本系统的站点名加入到IE的信任站点列表中！&quot;);
+            alert(&quot;无法调用Office对象，请确保本机已安装了Office并已将本系统的站点名加入到IE的信任站点列表中！&quot;);
             return;
         }
     }
 &lt;/script&gt;
 </code></pre><p>①注意：如果使用该方法创建ActiveXObject对象失败，则需要设置Internet选项的安全级别：</p>
-<blockquote>
-<p>Internet选项-安全-自定义级别-“<strong>对未标记为可安全执行脚本的ActiveX控件初始化并执行脚本</strong>”设置为开启</p>
-</blockquote>
-<p>②设置浏览器Internet选项安全级别可以通过注册表方式实现：</p>
-<blockquote>
-<p>1.运行 regedit 可以打开注册表编辑器;<br>2.Internet选项注册表数据在[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]下;<br>3.将下面内容保存到记事本并保存为.reg文件,可以通过代码调用</p>
-</blockquote>
-<pre><code>Windows Registry Editor Version 5.00 
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]
-&quot;1001&quot;=dword:00000000
-&quot;1004&quot;=dword:00000000
-&quot;1200&quot;=dword:00000000
-&quot;1201&quot;=dword:00000003
-&quot;1405&quot;=dword:00000000
-</code></pre><blockquote>
-<p>4.部分Internet选项的对应代码：</p>
-</blockquote>
-<pre><code>1001  下载已签名的 ActiveX 控件 
-1004  下载未签名的 ActiveX 控件
-1200  运行 ActiveX 控件和插件
-1201  对没有标记为安全的ActiveX控件进行初始化和脚本运行
-1405  对标记为可安全执行脚本的ActiveX控件执行脚本
-2201  ActiveX控件自动提示
+<pre><code>Internet选项-安全-自定义级别-“**对未标记为可安全执行脚本的ActiveX控件初始化并执行脚本**”设置为开启
+</code></pre><p>②设置浏览器Internet选项安全级别可以通过注册表方式实现：</p>
+<pre><code>1.运行 regedit 可以打开注册表编辑器;
+2.Internet选项注册表数据在[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]下;
+3.将下面内容保存到记事本并保存为.reg文件,可以通过代码调用
+    Windows Registry Editor Version 5.00 
+    [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]
+    &quot;1001&quot;=dword:00000000
+    &quot;1004&quot;=dword:00000000
+    &quot;1200&quot;=dword:00000000
+    &quot;1201&quot;=dword:00000003
+    &quot;1405&quot;=dword:00000000
+4.部分Internet选项的对应代码：
+    1001  下载已签名的 ActiveX 控件 
+    1004  下载未签名的 ActiveX 控件
+    1200  运行 ActiveX 控件和插件
+    1201  对没有标记为安全的ActiveX控件进行初始化和脚本运行
+    1405  对标记为可安全执行脚本的ActiveX控件执行脚本
+    2201  ActiveX控件自动提示
 </code></pre>
       
 
