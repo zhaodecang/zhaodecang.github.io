@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="﹌赵得C">
 <meta property="og:description" content="自定义JavaScript函数实现&amp;lt;input type=&amp;quot;button&amp;quot; name=&amp;quot;out_excel&amp;quot; onClick=&amp;quot;AutomateExcel();&amp;quot; value=&amp;quot;导出到excel&amp;quot; class=&amp;quot;notPrint&amp;quot;/&amp;gt;
 &amp;lt;script language=&amp;quot;">
-<meta property="og:updated_time" content="2017-08-10T14:56:12.063Z">
+<meta property="og:updated_time" content="2017-08-10T14:58:08.285Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="将Html中表格数据导出为Excel">
 <meta name="twitter:description" content="自定义JavaScript函数实现&amp;lt;input type=&amp;quot;button&amp;quot; name=&amp;quot;out_excel&amp;quot; onClick=&amp;quot;AutomateExcel();&amp;quot; value=&amp;quot;导出到excel&amp;quot; class=&amp;quot;notPrint&amp;quot;/&amp;gt;
@@ -197,7 +197,7 @@
                 appExcel.Workbooks.Add().Worksheets.Item(1).Paste();
                 appExcel = null;
         } catch (e) {
-            alert(&quot;无法调用Office对象，请确保本机已安装了Office并已将本系统的站点名加入到IE的信任站点列表中！&quot;);
+            alert(&quot;无法调用Office对象，需要修改Internet选项安全级别&quot;);
             return;
         }
     }
