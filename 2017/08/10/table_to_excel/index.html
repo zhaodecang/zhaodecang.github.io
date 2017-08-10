@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/zhaodecang">
-  <title>Archives: 2017 | ﹌赵得C</title>
+  <title>将Html中表格数据导出为Excel | ﹌赵得C</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="苦难显才华，好运隐天资">
-<meta property="og:type" content="website">
-<meta property="og:title" content="﹌赵得C">
-<meta property="og:url" content="https://github.com/zhaodecang/archives/2017/index.html">
+  <meta name="description" content="自定义JavaScript函数实现&amp;lt;input type=&amp;quot;button&amp;quot; name=&amp;quot;out_excel&amp;quot; onClick=&amp;quot;AutomateExcel();&amp;quot; value=&amp;quot;导出到excel&amp;quot; class=&amp;quot;notPrint&amp;quot;/&amp;gt;
+&amp;lt;script language=&amp;quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将Html中表格数据导出为Excel">
+<meta property="og:url" content="https://github.com/zhaodecang/2017/08/10/table_to_excel/index.html">
 <meta property="og:site_name" content="﹌赵得C">
-<meta property="og:description" content="苦难显才华，好运隐天资">
+<meta property="og:description" content="自定义JavaScript函数实现&amp;lt;input type=&amp;quot;button&amp;quot; name=&amp;quot;out_excel&amp;quot; onClick=&amp;quot;AutomateExcel();&amp;quot; value=&amp;quot;导出到excel&amp;quot; class=&amp;quot;notPrint&amp;quot;/&amp;gt;
+&amp;lt;script language=&amp;quot;">
+<meta property="og:updated_time" content="2017-08-10T14:50:24.612Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="﹌赵得C">
-<meta name="twitter:description" content="苦难显才华，好运隐天资">
+<meta name="twitter:title" content="将Html中表格数据导出为Excel">
+<meta name="twitter:description" content="自定义JavaScript函数实现&amp;lt;input type=&amp;quot;button&amp;quot; name=&amp;quot;out_excel&amp;quot; onClick=&amp;quot;AutomateExcel();&amp;quot; value=&amp;quot;导出到excel&amp;quot; class=&amp;quot;notPrint&amp;quot;/&amp;gt;
+&amp;lt;script language=&amp;quot;">
   
     <link rel="alternative" href="/atom.xml" title="﹌赵得C" type="application/atom+xml">
   
@@ -160,36 +164,97 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-table_to_excel" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/10/table_to_excel/" class="archive-article-date">
-  	<time datetime="2017-08-10T15:10:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/10/table_to_excel/">将Html中表格数据导出为Excel</a>
+    <h1 class="article-title" itemprop="name">
+      将Html中表格数据导出为Excel
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/08/10/table_to_excel/" class="archive-article-date">
+  	<time datetime="2017-08-10T15:10:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="自定义JavaScript函数实现"><a href="#自定义JavaScript函数实现" class="headerlink" title="自定义JavaScript函数实现"></a>自定义JavaScript函数实现</h3><pre><code>&lt;input type=&quot;button&quot; name=&quot;out_excel&quot; onClick=&quot;AutomateExcel();&quot; value=&quot;导出到excel&quot; class=&quot;notPrint&quot;/&gt;
+&lt;script language=&quot;javascript&quot;&gt;
+    function AutomateExcel() {
+        var elTable = document.getElementById(&quot;table1&quot;); //table1改成你的tableID
+        var oRangeRef = document.body.createTextRange();
+        oRangeRef.moveToElementText(elTable);
+        oRangeRef.execCommand(&quot;Copy&quot;);
+        try {
+            var appExcel = new ActiveXObject(&quot;Excel.Application&quot;);
+                appExcel.Visible = true;
+                appExcel.Workbooks.Add().Worksheets.Item(1).Paste();
+                appExcel = null;
+        } catch (e) {
+            alert(&quot;无法调用Office对象，请确保您的机器已安装了Office并已将本系统的站点名加入到IE的信任站点列表中！&quot;);
+            return;
+        }
+    }
+&lt;/script&gt;
+</code></pre><p>①注意：如果使用该方法创建ActiveXObject对象失败，则需要设置Internet选项的安全级别：</p>
+<blockquote>
+<p>Internet选项-安全-自定义级别-“<strong>对未标记为可安全执行脚本的ActiveX控件初始化并执行脚本</strong>”设置为开启</p>
+</blockquote>
+<p>②设置浏览器Internet选项安全级别可以通过注册表方式实现：</p>
+<blockquote>
+<p>1.运行 regedit 可以打开注册表编辑器;<br>2.Internet选项注册表数据在[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]下;<br>3.将下面内容保存到记事本并保存为.reg文件,可以通过代码调用</p>
+</blockquote>
+<pre><code>Windows Registry Editor Version 5.00 
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]
+&quot;1001&quot;=dword:00000000
+&quot;1004&quot;=dword:00000000
+&quot;1200&quot;=dword:00000000
+&quot;1201&quot;=dword:00000003
+&quot;1405&quot;=dword:00000000
+</code></pre><blockquote>
+<p>4.部分Internet选项的对应代码：</p>
+</blockquote>
+<pre><code>1001  下载已签名的 ActiveX 控件 
+1004  下载未签名的 ActiveX 控件
+1200  运行 ActiveX 控件和插件
+1201  对没有标记为安全的ActiveX控件进行初始化和脚本运行
+1405  对标记为可安全执行脚本的ActiveX控件执行脚本
+2201  ActiveX控件自动提示
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -201,7 +266,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -214,262 +279,104 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/zhaodecang/2017/08/10/table_to_excel/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/05/bdlocation/" class="archive-article-date">
-  	<time datetime="2017-06-05T13:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/05/bdlocation/">百度定位服务使用过程中的异常信息记录及解决方案</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">定位</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/移动应用开发/" class="article-tag-list-link color2">移动应用开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/05/eclipse error 1/" class="archive-article-date">
-  	<time datetime="2017-06-05T13:10:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/05/eclipse error 1/">开发工具常见问题解决方案</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Eclipse</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/移动应用开发/" class="article-tag-list-link color2">移动应用开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/04/custom_hexo_yilia/" class="archive-article-date">
-  	<time datetime="2017-06-04T12:06:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/04/custom_hexo_yilia/">Hexo主题yilia的自定义色彩搭配</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端开发/" class="article-tag-list-link color5">前端开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/03/newer_dev/" class="archive-article-date">
-  	<time datetime="2017-06-03T10:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/03/newer_dev/">最近项目总结笔记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/移动应用开发/" class="article-tag-list-link color2">移动应用开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/01/blog start/" class="archive-article-date">
-  	<time datetime="2017-06-01T14:35:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/01/blog start/">博客系统搭建之路</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/移动应用开发/" class="article-tag-list-link color2">移动应用开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/06/05/bdlocation/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">百度定位服务使用过程中的异常信息记录及解决方案</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="table_to_excel" data-title="将Html中表格数据导出为Excel" data-url="https://github.com/zhaodecang/2017/08/10/table_to_excel/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
 
-    
+
 
 
           </div>
@@ -492,8 +399,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

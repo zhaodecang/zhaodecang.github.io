@@ -162,6 +162,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-table_to_excel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/10/table_to_excel/">将Html中表格数据导出为Excel</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/10/table_to_excel/" class="archive-article-date">
+  	<time datetime="2017-08-10T15:10:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="自定义JavaScript函数实现"><a href="#自定义JavaScript函数实现" class="headerlink" title="自定义JavaScript函数实现"></a>自定义JavaScript函数实现</h3><pre><code>&lt;input type=&quot;button&quot; name=&quot;out_excel&quot; onClick=&quot;AutomateExcel();&quot; value=&quot;导出到excel&quot; class=&quot;notPrint&quot;/&gt;
+&lt;script language=&quot;javascript&quot;&gt;
+    function AutomateExcel() {
+        var elTable = document.getElementById(&quot;table1&quot;); //table1改成你的tableID
+        var oRangeRef = document.body.createTextRange();
+        oRangeRef.moveToElementText(elTable);
+        oRangeRef.execCommand(&quot;Copy&quot;);
+        try {
+            var appExcel = new ActiveXObject(&quot;Excel.Application&quot;);
+                appExcel.Visible = true;
+                appExcel.Workbooks.Add().Worksheets.Item(1).Paste();
+                appExcel = null;
+        } catch (e) {
+            alert(&quot;无法调用Office对象，请确保您的机器已安装了Office并已将本系统的站点名加入到IE的信任站点列表中！&quot;);
+            return;
+        }
+    }
+&lt;/script&gt;
+</code></pre><p>①注意：如果使用该方法创建ActiveXObject对象失败，则需要设置Internet选项的安全级别：</p>
+<blockquote>
+<p>Internet选项-安全-自定义级别-“<strong>对未标记为可安全执行脚本的ActiveX控件初始化并执行脚本</strong>”设置为开启</p>
+</blockquote>
+<p>②设置浏览器Internet选项安全级别可以通过注册表方式实现：</p>
+<blockquote>
+<p>1.运行 regedit 可以打开注册表编辑器;<br>2.Internet选项注册表数据在[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]下;<br>3.将下面内容保存到记事本并保存为.reg文件,可以通过代码调用</p>
+</blockquote>
+<pre><code>Windows Registry Editor Version 5.00 
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3]
+&quot;1001&quot;=dword:00000000
+&quot;1004&quot;=dword:00000000
+&quot;1200&quot;=dword:00000000
+&quot;1201&quot;=dword:00000003
+&quot;1405&quot;=dword:00000000
+</code></pre><blockquote>
+<p>4.部分Internet选项的对应代码：</p>
+</blockquote>
+<pre><code>1001  下载已签名的 ActiveX 控件 
+1004  下载未签名的 ActiveX 控件
+1200  运行 ActiveX 控件和插件
+1201  对没有标记为安全的ActiveX控件进行初始化和脚本运行
+1405  对标记为可安全执行脚本的ActiveX控件执行脚本
+2201  ActiveX控件自动提示
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/移动应用开发/" class="article-tag-list-link color2">移动应用开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/10/table_to_excel/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-bdlocation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1099,6 +1213,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">定位</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
               </li>
             
             <div class="clearfix"></div>
