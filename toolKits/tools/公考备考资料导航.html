@@ -1,0 +1,424 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公考备考资料导航</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 10px; }
+        .container { margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        header p { font-size: 1.1em; opacity: 0.9; }
+        .root-link { display: inline-block; margin-top: 20px; padding: 15px 40px; background: white; color: #667eea; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.2em; transition: all 0.3s ease; }
+        .root-link:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .main-content { padding: 10px 10px; }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; align-items: start; }
+        .category-card { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease; background: white; }
+        .category-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .category-header { padding: 5px 8px; color: white; font-size: 1.2em; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+        .category-header::after { content: '▼'; transition: transform 0.3s ease; font-size: 0.8em; opacity: 0.8; }
+        .category-card.collapsed .category-header::after { transform: rotate(-90deg); }
+        .category-content { background: white; overflow: hidden; transition: max-height 0.3s ease; }
+        .category-card.collapsed .category-content { max-height: 0; }
+        .resource-list { list-style: none; padding: 12px; max-height: 400px; overflow-y: auto; }
+        .resource-list::-webkit-scrollbar { width: 6px; }
+        .resource-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
+        .resource-list::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }
+        .resource-list::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        .resource-list li { margin-bottom: 8px; }
+        .resource-list a { display: block; padding: 5px 12px; background: #f8f9fa; color: #333; text-decoration: none; border-radius: 6px; transition: all 0.2s ease; border-left: 3px solid transparent; font-size: 0.95em; line-height: 1.4; }
+        .resource-list a:hover { background: #e9ecef; transform: translateX(5px); }
+        .category-1 .category-header { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .category-1 .resource-list a:hover { border-left-color: #11998e; }
+        .category-2 .category-header { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .category-2 .resource-list a:hover { border-left-color: #667eea; }
+        .category-3 .category-header { background: linear-gradient(135deg, #eb3349, #f45c43); }
+        .category-3 .resource-list a:hover { border-left-color: #eb3349; }
+        .category-4 .category-header { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .category-4 .resource-list a:hover { border-left-color: #f093fb; }
+        .category-5 .category-header { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .category-5 .resource-list a:hover { border-left-color: #4facfe; }
+        .category-6 .category-header { background: linear-gradient(135deg, #fa709a, #fee140); }
+        .category-6 .resource-list a:hover { border-left-color: #fa709a; }
+        .category-7 .category-header { background: linear-gradient(135deg, #a8edea, #fed6e3); color: #333; }
+        .category-7 .resource-list a:hover { border-left-color: #a8edea; }
+        .category-8 .category-header { background: linear-gradient(135deg, #ffecd2, #fcb69f); color: #333; }
+        .category-8 .resource-list a:hover { border-left-color: #ffecd2; }
+        .category-9 .category-header { background: linear-gradient(135deg, #d299c2, #fef9d7); color: #333; }
+        .category-9 .resource-list a:hover { border-left-color: #d299c2; }
+        footer { background: #f8f9fa; padding: 25px; text-align: center; color: #666; border-top: 1px solid #e9ecef; }
+        @media (max-width: 768px) { 
+            header h1 { font-size: 1.6em; } 
+            header p { font-size: 1em; }
+            .category-grid { grid-template-columns: 1fr; } 
+            .main-content { padding: 20px 15px; }
+        }
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .category-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+        }
+        @media (min-width: 1201px) {
+            .category-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="category-grid">
+                <div class="category-card category-1">
+                    <div class="category-header" onclick="toggleCategory(this)">📊 资料分析</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+                            <li><a href="https://www.wolai.com/q71GFTwAjL1roDLyW4ocbF" target="_blank">资料分析思维导图</a></li>
+                            <li><a href="https://www.wolai.com/o7x2AMJcHQw6qjcWde6eKe" target="_blank">【资料】一张导图总结破题方法</a></li>
+                            <li><a href="https://www.wolai.com/rcAvwP3KBR71Y3LZNUvHGe" target="_blank">【资料】百化分壁纸</a></li>
+                            <li><a href="https://www.wolai.com/o6xroeMwGr9KoE4aGfH7kw" target="_blank">资料分析必背公式【带题目复习】</a></li>
+                            <li><a href="https://www.wolai.com/rQt76YRrdtPdWdfUw2wRnQ" target="_blank">资料分析考前必背</a></li>
+                            <li><a href="https://www.wolai.com/qVEcoyPm1zPHWT1Hv9Ttp5" target="_blank">资料分析常见陷阱，避坑指南</a></li>
+                            <li><a href="https://www.wolai.com/6gbTLBv2zJGYMeerbG51hs" target="_blank">资料分析 10 大考点</a></li>
+                            <li><a href="https://www.wolai.com/7HKPjuvGCrn8ZAz5FyYJMS" target="_blank">速算专项训练题</a></li>
+                            <li><a href="https://www.wolai.com/hQ28MFq1RPvog9Yzox62SJ" target="_blank">读题专项训练题</a></li>
+                            <li><a href="https://www.wolai.com/4HMs7ScygRgfc9tL3HEwbk" target="_blank">资料分析关键词快速匹配练习</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category-card category-2">
+                    <div class="category-header" onclick="toggleCategory(this)">📝 言语理解</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+                            <li><a href="https://www.wolai.com/i6yMaLqLBhHTx6tAQbbedJ" target="_blank">【言语】言语理解超详细笔记</a></li>
+                            <li><a href="https://www.wolai.com/saJgqDJgo9sZmSCgZ89hZe" target="_blank">【言语】学霸总结笔记</a></li>
+                            <li><a href="https://www.wolai.com/864Pd9jPgGaR2gj36qE52U" target="_blank">【言语】一张图总结系列之言语理解</a></li>
+                            <li><a href="https://www.wolai.com/dK9YJzx76dxtpSLxuWTeee" target="_blank">【言语】强化冲刺笔记总结 - 考前</a></li>
+                            <li><a href="https://www.wolai.com/4FGJtsarJh5CQUyfVvSm8A" target="_blank">言语理解爆雷词</a></li>
+                            <li><a href="https://www.wolai.com/mV8RNXR3UyjmPBb7G4zXdk" target="_blank">近五年真题高频成语</a></li>
+                            <li><a href="https://www.wolai.com/43DQEvMsq1569s9zLYM6sv" target="_blank">小宝言语背诵资料</a></li>
+                            <li><a href="https://www.wolai.com/gMot9GJGSvYqTXEGYBdK5E" target="_blank">言语 - 常考成语 100 个</a></li>
+                            <li><a href="https://www.wolai.com/fLwCy93PqFzCB8nE68JFCc" target="_blank">言语 - 常考实词 100 个</a></li>
+                            <li><a href="https://www.wolai.com/9jGFb6rHeusPonpPu8xzjT" target="_blank">国考和省考真题出现的高频成语</a></li>
+                            <li><a href="https://www.wolai.com/jAaxYoAENx1D2wBS9s5eFG" target="_blank">言语理解 11 大考点</a></li>
+                            <li><a href="https://www.wolai.com/aRc2tU31oAmGqwhp7PWESG" target="_blank">言语 - 阅读理解学霸笔记</a></li>
+                            <li><a href="https://www.wolai.com/29MiPkkTeRaDrLnSBNixoB" target="_blank">【言语理解与表达】标题、下文、语句填入、排序</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category-card category-3">
+                    <div class="category-header" onclick="toggleCategory(this)">🔍 判断推理</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+                            <li><a href="https://www.wolai.com/iY8oGpY2pxob2QTXmYSXMF" target="_blank">类比关系超全思维导图总结</a></li>
+                            <li><a href="https://www.wolai.com/eWmRhvAB4DyZ1oSbqVzh6s" target="_blank">【技巧】类比推理 - 口诀秒杀</a></li>
+                            <li><a href="https://www.wolai.com/cAbMMo8fbH7keMuJduwV2" target="_blank">24 种关系超全总结和二级辨析</a></li>
+                            <li><a href="https://www.wolai.com/9HJSt8Nij1bFyeWqfptUFc" target="_blank">类比推理常识化总结</a></li>
+                            <li><a href="https://www.wolai.com/cbemUaHXHc5pkoD95sDyo8" target="_blank">类比中的常识</a></li>
+                            <li><a href="https://www.wolai.com/kW4Ut2RChZhKbSUoZUZrFQ" target="_blank">【判断推理】逻辑基本知识</a></li>
+                            <li><a href="https://www.wolai.com/kUzNaVWif3ogjjkuYqC1XF" target="_blank">【判断推理】支持、前提假设、比例、解释说明</a></li>
+                            <li><a href="https://www.wolai.com/p9dLLDwxXMfanBUM9oEheR" target="_blank">【判断推理】质疑类</a></li>
+                            <li><a href="https://www.wolai.com/h5udEJRqEyEGNVL59L8jA" target="_blank">【判断】逻辑推理超全笔记总结</a></li>
+                            <li><a href="https://www.wolai.com/tBoiUMGXW3vjFDAwZ1ajxa" target="_blank">判断推理 12 大考点</a></li>
+                            <li><a href="https://www.wolai.com/rVZDYtynXwQpPwUFoXwEwd" target="_blank">钩不了沉逻辑判断秒杀笔记</a></li>
+                            <li><a href="https://www.wolai.com/xtA35amPb6NftCDiHcaAYC" target="_blank">【技巧】逻辑判断 - 口诀秒杀</a></li>
+                            <li><a href="https://www.wolai.com/vmmFatLH8J3kbWvYBpyEok" target="_blank">【判断】逻辑判断十二神技思维导图总结</a></li>
+                            <li><a href="https://www.wolai.com/2rBu6bjZ5SmFkMFDm59Bak" target="_blank">8 大逻辑谬误</a></li>
+                            <li><a href="https://www.wolai.com/ah5KmWLc63xJsWXniyfdR1" target="_blank">定义判断知识点导图</a></li>
+                            <li><a href="https://www.wolai.com/iUTr6jserP7zBPrgat91Cn" target="_blank">定义判断必会解题思路</a></li>
+                            <li><a href="https://www.wolai.com/uif2uZrVydQbRzRx91ckA9" target="_blank">考点总结</a></li>
+                            <li><a href="https://www.wolai.com/9Rxmo5WW7DrzD5aEgh3RDh" target="_blank">【判断】图形推理必备思维导图</a></li>
+                            <li><a href="https://www.wolai.com/8Duy5MbmZMj4mkMDKhkmux" target="_blank">图推 1000 题总结</a></li>
+                            <li><a href="https://www.wolai.com/7wDyVui2cbmBfn9pP9uHuv" target="_blank">【判断】图形推理超级总结</a></li>
+                            <li><a href="https://www.wolai.com/qhesTvyy7V3Fi9YdvYRj2f" target="_blank">【判断】图推常考规律和特征图</a></li>
+                            <li><a href="https://www.wolai.com/fcYgg3PFeSV4MZrhmtfm6t" target="_blank">【判断】图推特征图和细化考点法总结</a></li>
+                            <li><a href="https://www.wolai.com/9j4CUYt4fScMwXHegJ6qTW" target="_blank">【判断】图推必会解题思路</a></li>
+                            <li><a href="https://www.wolai.com/b4HF8i98AGVHr2PUyjkztA" target="_blank">【技巧】图形推理 - 口诀秒杀</a></li>
+                            <li><a href="https://www.wolai.com/eqAhMqCzbxHT5q8vpcmpHE" target="_blank">逻辑填空高频词</a></li>
+                            <li><a href="https://www.wolai.com/mUgmpJnEtjAfxSJNVfAqPB" target="_blank">网红判断口诀 2025 年汇总</a></li>
+                            <li><a href="https://www.wolai.com/jhYwwzTAUWs7uPb3KjRMoW" target="_blank">网红判断口诀 2024 年 5 月汇总_副本</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category-card category-4">
+                    <div class="category-header" onclick="toggleCategory(this)">🔢 数量关系</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+                            <li><a href="https://www.wolai.com/eDSK1GtsJTC9eXuQyizaFP" target="_blank">数量蒙猜技巧</a></li>
+                            <li><a href="https://www.wolai.com/54y6e9vohMqN5zcTEKnbDG" target="_blank">数量思维导图</a></li>
+                            <li><a href="https://www.wolai.com/v81F6gaqt3PYEe7h6LE7aR" target="_blank">数量关系 17 大考点</a></li>
+                            <li><a href="https://www.wolai.com/71UqJBtepqB8m3qpg1kLzL" target="_blank">【数量】核心方法和公式总结</a></li>
+                            <li><a href="https://www.wolai.com/2MbWrrQzFBzeTqHG6LDNJZ" target="_blank">【数量】十大知识点和公式总结</a></li>
+                            <li><a href="https://www.wolai.com/a5k5YU6Z4Du3sE6qDsueS5" target="_blank">名师高分总结：数资常用公式汇总</a></li>
+                            <li><a href="https://www.wolai.com/x9wQcsoAE7LLyujoFtgskX" target="_blank">【数量】核心公式总结</a></li>
+                            <li><a href="https://www.wolai.com/734FygNfHW33foJCzf3VKH" target="_blank">数量资料公式（汇编全集）</a></li>
+                            <li><a href="https://www.wolai.com/3AeCDmH4H2SQWrmxFAhxNh" target="_blank">数量技巧 - 口诀秒杀</a></li>
+                            <li><a href="https://www.wolai.com/uGrKgFunvH3pwsVwAMGJnL" target="_blank">数量十大秒杀公式总结</a></li>
+                            <li><a href="https://www.wolai.com/2Fo12cm2SwiH36c9HQiu5D" target="_blank">数学运算考前必背</a></li>
+                            <li><a href="https://www.wolai.com/odSoJJBeHC4GDgXTcPTuB2" target="_blank">工程问题</a></li>
+                            <li><a href="https://www.wolai.com/mTYBjhYSj3SzrdG9wrnaJC" target="_blank">溶液问题</a></li>
+                            <li><a href="https://www.wolai.com/jeMUwwgNUBanxu3KgXdXgF" target="_blank">集合容斥</a></li>
+                            <li><a href="https://www.wolai.com/boB9bzoJ3H2torp1SvZZZL" target="_blank">牛吃草</a></li>
+                            <li><a href="https://www.wolai.com/gBY66XzNq542YH2WT9PeLE" target="_blank">经济利润问题</a></li>
+                            <li><a href="https://www.wolai.com/4sRc1kL4rDvG22TJVhREyv" target="_blank">行程问题</a></li>
+                            <li><a href="https://www.wolai.com/jLvLd2bC58W2Eui7QqEXXk" target="_blank">最值问题</a></li>
+                            <li><a href="https://www.wolai.com/eNN11nsjQngYHFhb9kMrGM" target="_blank">几何问题</a></li>
+                            <li><a href="https://www.wolai.com/wDrHtouEw5Udya344WtqiH" target="_blank">星期日期问题</a></li>
+                            <li><a href="https://www.wolai.com/39dxkkX76BkCaeJrzoi6NF" target="_blank">排列组合与概率</a></li>
+                            <li><a href="https://www.wolai.com/c5AgE51zj1NG9hH5JeC4ue" target="_blank">钟表问题</a></li>
+                            <li><a href="https://www.wolai.com/97hbmDnPA9seurPFzDzapj" target="_blank">植树问题</a></li>
+                            <li><a href="https://www.wolai.com/3ScfiHz7aAnE5igUGScmpw" target="_blank">四五牛过河</a></li>
+                            <li><a href="https://www.wolai.com/64LAvC71gLhhaGBewrGwK6" target="_blank">方阵问题</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category-card category-5">
+                    <div class="category-header" onclick="toggleCategory(this)">🌍 常识判断</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+                            <li><a href="https://www.wolai.com/b1Jbf8PiDHinAuLQZrL1Ku" target="_blank">常识必错选项</a></li>
+                            <li><a href="https://www.wolai.com/ciyXEYGF9GWGV2kbojLPmx" target="_blank">24 周年纪念大事件整理</a></li>
+                            <li><a href="https://www.wolai.com/giyLnriyvFK2xjBJDMbDmw" target="_blank">2O 大报告划线重点版</a></li>
+                            <li><a href="https://www.wolai.com/t5NkXvvBmbGeBDi2Y4HR5G" target="_blank">2O 大报告自测题</a></li>
+                            <li><a href="https://www.wolai.com/ouptpMgtuu71Prjcs2h5uD" target="_blank">二十大报告 时政老师解读版</a></li>
+                            <li><a href="https://www.wolai.com/3VEtDSKQrzXVSG4ijKGAkD" target="_blank">二十大报告自测 100 题</a></li>
+                            <li><a href="https://www.wolai.com/iA8Lk6e7zVbem3cbfuNsyb" target="_blank">二十大核心 100 题（半月谈版）</a></li>
+                            <li><a href="https://www.wolai.com/4sLKuRTi8Jx1pdhVP5fFmy" target="_blank">二十大思维导图</a></li>
+                            <li><a href="https://www.wolai.com/GPCTmu3MPqYq1mPjzv9GZ" target="_blank">二十大自测 20 题（央视新闻版）</a></li>
+                            <li><a href="https://www.wolai.com/5GJRU7hjPycn4Mo6CWG1ER" target="_blank">二十大自测 100 题（共产党员网）</a></li>
+                            <li><a href="https://www.wolai.com/kKfTnkAeaQvqXTza6yMMsc" target="_blank">二十大自测 100 题（求是网版）</a></li>
+                            <li><a href="https://www.wolai.com/mezP2qnFWHNBBV2RaiNeDo" target="_blank">二十大自测 100 题（人民日报版）</a></li>
+                            <li><a href="https://www.wolai.com/wLj31wWLDK8SLLjqsGbaLT" target="_blank">二十大自测 100 题（学习强国版）</a></li>
+                            <li><a href="https://www.wolai.com/iWLj2udWgDZ9pjSc7L9PZ8" target="_blank">地理国情 330 题【完】</a></li>
+                            <li><a href="https://www.wolai.com/4Ty5xFV97pjeBVUUuFHtru" target="_blank">常识必备 - 地理篇</a></li>
+                            <li><a href="https://www.wolai.com/vZ67qjkt8TJnEsaHVHg9wH" target="_blank">法律专项习题</a></li>
+                            <li><a href="https://www.wolai.com/mGRuktW8yqAmyjvK8LmVez" target="_blank">常识必备 - 法律篇</a></li>
+                            <li><a href="https://www.wolai.com/2GQbXBTh3T7XmQrE7yNZiH" target="_blank">经济 3500 题</a></li>
+                            <li><a href="https://www.wolai.com/uDpm9ZjcGaZEqxb5QEuBNr" target="_blank">常识必备 - 经济篇</a></li>
+                            <li><a href="https://www.wolai.com/mihmDs6oCb8qf9RvXmZAG4" target="_blank">科技常识 677 题</a></li>
+                            <li><a href="https://www.wolai.com/xhbkRR75Dqs1M4fwbwMRP9" target="_blank">常识必备 - 科技篇</a></li>
+                            <li><a href="https://www.wolai.com/hXfFfTxANxCCjFQoE55qHn" target="_blank">人文常识 788 题</a></li>
+                            <li><a href="https://www.wolai.com/k4zmvDU7q85SdUzS8VpkRV" target="_blank">常识必备 - 人文篇</a></li>
+                            <li><a href="https://www.wolai.com/oJ67rhDym2MWJNFaYYZ3eh" target="_blank">政治常识 155 题</a></li>
+                            <li><a href="https://www.wolai.com/ihsZLEoDDm9qRtLz9vs17L" target="_blank">常识必备 - 政治篇</a></li>
+                            <li><a href="https://www.wolai.com/rr1TM3HCudBnXveSBpy6HP" target="_blank">公文处理 310 题</a></li>
+                            <li><a href="https://www.wolai.com/i9h8NdGZdqSNTZkFKzDDZL" target="_blank">公文的概念与特点 345 题</a></li>
+                            <li><a href="https://www.wolai.com/aGLz4TGhXznP9m1hCfKNgW" target="_blank">公文的格式 790 题</a></li>
+                            <li><a href="https://www.wolai.com/38rhwMEaqGzijWDZF3UqAq" target="_blank">公文其他考点 144 题</a></li>
+                            <li><a href="https://www.wolai.com/rwQ6g5ysRwsCRVHjc6qXkC" target="_blank">公文文种 835 题</a></li>
+                            <li><a href="https://www.wolai.com/bL1p7nRzpRsZvoAmyCwH3w" target="_blank">公文行文规定 400 题</a></li>
+                            <li><a href="https://www.wolai.com/gLTCsBEuXVCz7ZDSbEscTi" target="_blank">2022 公考常识 313 篇（上）</a></li>
+                            <li><a href="https://www.wolai.com/iy5e9QC7y8QTmXD9tam9Qc" target="_blank">2022 公考常识 313 篇（下）</a></li>
+                            <li><a href="https://www.wolai.com/puUTZB2XNGtGdovHcwNCoW" target="_blank">30 个省政府报告考点 2024</a></li>
+                            <li><a href="https://www.wolai.com/ixyf7yXQFPmhD77aW7KaXc" target="_blank">时政月报 -23 年和 24 年</a></li>
+                            <li><a href="https://www.wolai.com/p1fepC6y3mqqfJHnxQVBwp" target="_blank">认识论 469 题 + 解析</a></li>
+                            <li><a href="https://www.wolai.com/5siP2NJLhdKqSfQFwSmasc" target="_blank">唯物论 396 题 + 解析</a></li>
+                            <li><a href="https://www.wolai.com/dYaE7wst6euYM5D1CiRacF" target="_blank">唯物史观 472 题 + 解析</a></li>
+                            <li><a href="https://www.wolai.com/m911BzeAuri5AHwyqsHHDK" target="_blank">哲学概述 347 题 + 解析</a></li>
+                            <li><a href="https://www.wolai.com/tXydtPVkpJDrygAEbH7FbV" target="_blank">其他考点 46 题 + 解析</a></li>
+                            <li><a href="https://www.wolai.com/tUGtCgExAZ5SDnpsy7FKzf" target="_blank">中国历史 1330 题</a></li>
+                            <li><a href="https://www.wolai.com/qZfdKt7oJRL4ZgskzT8JYN" target="_blank">文学常识 1375 题</a></li>
+                            <li><a href="https://www.wolai.com/ghxNU2jomaY1wYZhvESK3h" target="_blank">文化常识 1295 题</a></li>
+                            <li><a href="https://www.wolai.com/6kAuugeaauos58BScUSmdU" target="_blank">世界历史 225 题</a></li>
+                            <li><a href="https://www.wolai.com/8Mw6FizNC9HRwzpLzhVTVM" target="_blank">其他考点 67 题</a></li>
+                            <li><a href="https://www.wolai.com/bhFgRNfNhgT68ygomiEhP9" target="_blank">公基彩色笔记（新版）</a></li>
+                            <li><a href="https://www.wolai.com/jWVDi6eAKjFqNCv8VLftgV" target="_blank">公共基础知识教材版笔记</a></li>
+                            <li><a href="https://www.wolai.com/f2vyx4Bmt6PB1f7tJ2zm6H" target="_blank">公共基础知识教材大默写</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category-card category-6">
+                    <div class="category-header" onclick="toggleCategory(this)">📖 申论</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+                            <li><a href="https://www.wolai.com/wKrW5TJBF6ghjxQFak6RLf" target="_blank">【乡镇类】申论规范表达</a></li>
+                            <li><a href="https://www.wolai.com/uy5c8r8hkG6ECF9QQdT4L6" target="_blank">【人物版】申论核心规范词 1000 词</a></li>
+                            <li><a href="https://www.wolai.com/2PnV5iVB4VsEpg7iEkB9Jj" target="_blank">【粉笔版】申论规范表达 43 页</a></li>
+                            <li><a href="https://www.wolai.com/9tPY24o26xuwux97GG3Rzo" target="_blank">【规范表达 300 组】申论规范表达 48 页</a></li>
+                            <li><a href="https://www.wolai.com/rJ59Tcfe7AvDbYZmfZbran" target="_blank">【彩印笔记版】申论规范表达积累 16 页</a></li>
+                            <li><a href="https://www.wolai.com/kNL6UDWBkyRVjbxMajiQo7" target="_blank">【彩色版】申论规范表达 9 页</a></li>
+                            <li><a href="https://www.wolai.com/sCts88Ne34FHCweLwLJF99" target="_blank">【报告版】2022 各省份报告规范词合集</a></li>
+                            <li><a href="https://www.wolai.com/kJ8U1TZxgzt8JJSDnuxprj" target="_blank">规范表达简单分类 - 临时佛脚版</a></li>
+                            <li><a href="https://www.wolai.com/dajKRTMBZtk8NkmtNMe9aw" target="_blank">申论规范表达 12 页</a></li>
+                            <li><a href="https://www.wolai.com/oWM1Qrku2ikgwLZe7RtrvS" target="_blank">200 组真题申论概括词积累</a></li>
+                            <li><a href="https://www.wolai.com/i2CjaRVWpKdvivZLDL4xXd" target="_blank">【人民时评】范文 50 篇</a></li>
+                            <li><a href="https://www.wolai.com/7a2ddURdyQN218f6PGJ56r" target="_blank">省考申论人物素材 48 个</a></li>
+                            <li><a href="https://www.wolai.com/ok9FPtCrevfEp7b7SzAzZU" target="_blank">申论常用名言 1000 句</a></li>
+                            <li><a href="https://www.wolai.com/3d5JLrK3Jf4vnw2FgxLdfZ" target="_blank">申论热点金词 500 个</a></li>
+                            <li><a href="https://www.wolai.com/5zmkrn6tFfDKzj9NyfWZwJ" target="_blank">新编押题作文 27 篇</a></li>
+                            <li><a href="https://www.wolai.com/gQCcf22VRG8gZL4sFfAmn3" target="_blank">省考押题作文 24 篇</a></li>
+                            <li><a href="https://www.wolai.com/pQVL2gbVWaVkXJVSGkLupy" target="_blank">国考押题范文 24 篇</a></li>
+                            <li><a href="https://www.wolai.com/4HDQFVuf7xcESrr9oPggAM" target="_blank">历年高分范文 50 篇</a></li>
+                            <li><a href="https://www.wolai.com/xq3n4p8G9i75ZpxAHtCPEm" target="_blank">2023 申论规范词 1000 条</a></li>
+                            <li><a href="https://www.wolai.com/8RMdWU757ziVWyfxxhpJD9" target="_blank">申论对策</a></li>
+                            <li><a href="https://www.wolai.com/3xDhHjZxtRMz5wCWnVdiH3" target="_blank">申论 32 大高分模板</a></li>
+                            <li><a href="https://www.wolai.com/vR1XT1cw2CxvisdBmpoJKo" target="_blank">24 年中央 1 号文件深度解读</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category-card category-7">
+                    <div class="category-header" onclick="toggleCategory(this)">⚡ 速算技巧</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+                            <li><a href="https://www.wolai.com/o4GK4vbQnRnLnS9f2bPxsA" target="_blank">尾数法</a></li>
+                            <li><a href="https://www.wolai.com/6hBKJH4SDUT4eZo4qXxEW5" target="_blank">高位叠加 + 正态估算</a></li>
+                            <li><a href="https://www.wolai.com/e2B15rgu2nbAeyoqjnSTfF" target="_blank">削峰填谷</a></li>
+                            <li><a href="https://www.wolai.com/ucqgWb6jsZAn97y9Lj1iBg" target="_blank">加法补算法</a></li>
+                            <li><a href="https://www.wolai.com/hRWPrprofULZFCytMMTBGs" target="_blank">分段/倒减/补数</a></li>
+                            <li><a href="https://www.wolai.com/tPo9Wm7meZ6fPvo37cUQXN" target="_blank">减法估算</a></li>
+                            <li><a href="https://www.wolai.com/6QmvYdroBxLWkAGqg7iqfC" target="_blank">减法补算法</a></li>
+                            <li><a href="https://www.wolai.com/nRPxXkictyMjqT9k5v3duK" target="_blank">多米诺骨牌法</a></li>
+                            <li><a href="https://www.wolai.com/7AR5waCVp7qqcaUyvMkeQG" target="_blank">乘法拆分</a></li>
+                            <li><a href="https://www.wolai.com/arE3ayp7nV1EvXZY3pARKv" target="_blank">乘法化除</a></li>
+                            <li><a href="https://www.wolai.com/sP9qhpNfXV9FLyUthZCj9a" target="_blank">等比缩放</a></li>
+                            <li><a href="https://www.wolai.com/mJ4rAWbeJYoeyT4SPU4gVu" target="_blank">特殊数字法</a></li>
+                            <li><a href="https://www.wolai.com/KV4ds178qYNgM4ZELMiSX" target="_blank">3 位×3 位精速算</a></li>
+                            <li><a href="https://www.wolai.com/iJ4iZDvvg1NNXMjXA7yfj9" target="_blank">2 位×2 位精速算</a></li>
+                            <li><a href="https://www.wolai.com/wswyEAg4KUQJPDVux8ewDU" target="_blank">3 位×2 位精速算</a></li>
+                            <li><a href="https://www.wolai.com/srS1MEBuHvttbr4tmNd6Aw" target="_blank">截位直除</a></li>
+                            <li><a href="https://www.wolai.com/t71KEN5TxHFeZ4xv3tWxuo" target="_blank">除法拆分法</a></li>
+                            <li><a href="https://www.wolai.com/e5ycZiPtK5mhse4vAsJu5w" target="_blank">等比缩放法</a></li>
+                            <li><a href="https://www.wolai.com/8qN9Qefkxhjh65CF8TeXuH" target="_blank">基期计算</a></li>
+                            <li><a href="https://www.wolai.com/tSY8C8gCDyLohn14q9f2UX" target="_blank">基期比大小</a></li>
+                            <li><a href="https://www.wolai.com/mPgc98MeeYaghYZkPmCuom" target="_blank">基期和差</a></li>
+                            <li><a href="https://www.wolai.com/twoEjoLaAa2g1tMHwfxqYt" target="_blank">基期变形</a></li>
+                            <li><a href="https://www.wolai.com/jKrr46W3Rq2J5YHvhWKUr4" target="_blank">现期追赶等问题</a></li>
+                            <li><a href="https://www.wolai.com/65PGfwoGTwRwo7k1DbYcYz" target="_blank">增长量计算合集</a></li>
+                            <li><a href="https://www.wolai.com/akMyds8JECBz3RHcY4zCoi" target="_blank">一般增长率合集</a></li>
+                            <li><a href="https://www.wolai.com/8qUxyjktMhaD2HYJC5ZN8t" target="_blank">间隔增长率</a></li>
+                            <li><a href="https://www.wolai.com/fPQ91zQxTEsbi5eiSVs8NE" target="_blank">乘积增长率</a></li>
+                            <li><a href="https://www.wolai.com/e1V6XYDvnrgm9rFF4MPECh" target="_blank">年均增长率</a></li>
+                            <li><a href="https://www.wolai.com/dUY2gZKjiToj5r61Rdxz91" target="_blank">混合增长率</a></li>
+                            <li><a href="https://www.wolai.com/mGzUYFJVkMaE1TYHdyT6vY" target="_blank">其他增长率</a></li>
+                            <li><a href="https://www.wolai.com/t9pRMrJSoGz7A9UhZchQj6" target="_blank">基期平均数</a></li>
+                            <li><a href="https://www.wolai.com/ecVNH9Sm8gYmSSsVseFJs9" target="_blank">现期平均数</a></li>
+                            <li><a href="https://www.wolai.com/egHfAZH9jT1RHrvZX5E5LK" target="_blank">两期平均数</a></li>
+                            <li><a href="https://www.wolai.com/uPPhMzkL1bYkiz6PJB62vG" target="_blank">平均数倍数</a></li>
+                            <li><a href="https://www.wolai.com/5oq1ToxQaZm3mmySBtJrPR" target="_blank">基期比重</a></li>
+                            <li><a href="https://www.wolai.com/6LHqfEyTrccDBLrh34fHVZ" target="_blank">现期比重</a></li>
+                            <li><a href="https://www.wolai.com/dxq1RWoPyuKcsC7NiJh3wb" target="_blank">两期比重</a></li>
+                            <li><a href="https://www.wolai.com/98nXhroqhddHoUDXFYuHbx" target="_blank">现期倍数</a></li>
+                            <li><a href="https://www.wolai.com/dmXt1o5kfW9x4h5h1xwWNe" target="_blank">基期倍数</a></li>
+                            <li><a href="https://www.wolai.com/wY9stDh76zrD5iagUTer9B" target="_blank">增长量倍数</a></li>
+                            <li><a href="https://www.wolai.com/gyzukF9FZ4tNzBRjDfevXe" target="_blank">比大小</a></li>
+                            <li><a href="https://www.wolai.com/qLahoh2KbEXCcpfrZ35MMG" target="_blank">👯十字交叉问题</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category-card category-8">
+                    <div class="category-header" onclick="toggleCategory(this)">💡 解题技巧</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+                            <li><a href="https://www.wolai.com/3QPDCcLMJU9AaUjUYE48GN" target="_blank">代入排除法</a></li>
+                            <li><a href="https://www.wolai.com/pteYa1ckXP7EwigmJFcvzo" target="_blank">倍数技巧</a></li>
+                            <li><a href="https://www.wolai.com/jWJiCQd4CSLLAvW4UX9rjL" target="_blank">方程法</a></li>
+                            <li><a href="https://www.wolai.com/mYA6AMQ5gc2tyoe6FuNF5Y" target="_blank">截面图</a></li>
+                            <li><a href="https://www.wolai.com/sRM1VLKcT5E4S7cw2VmgV5" target="_blank">三视图</a></li>
+                            <li><a href="https://www.wolai.com/k9QeQQ4CJEw57gzbzfxVWi" target="_blank">立体拼合</a></li>
+                            <li><a href="https://www.wolai.com/uU9GCrL53btnaUTxRL4hz8" target="_blank">多面体折叠</a></li>
+                            <li><a href="https://www.wolai.com/8ZCnc7putzrXNagchQkrYJ" target="_blank">空间重构 - 六面体</a></li>
+                            <li><a href="https://www.wolai.com/wB8jQxxqR3wckmWxD3Tc2B" target="_blank">位置规律</a></li>
+                            <li><a href="https://www.wolai.com/bvZdoX6SeAwBBFRr5HJroP" target="_blank">属性规律</a></li>
+                            <li><a href="https://www.wolai.com/gkhicruWnmhXgWFWiXRhn3" target="_blank">数量规律</a></li>
+                            <li><a href="https://www.wolai.com/mbyRMr9v6Kpk67BYUviB5y" target="_blank">样式规律</a></li>
+                            <li><a href="https://www.wolai.com/9ykPrEky9XagFh4qG82eGh" target="_blank">特殊规律</a></li>
+                            <li><a href="https://www.wolai.com/6kiafqSME7LghRqPsm7f6H" target="_blank">汉字/字母/数字总结</a></li>
+                            <li><a href="https://www.wolai.com/hW6sjVZSAEMmxousgU9Km4" target="_blank">黑白块总结</a></li>
+                            <li><a href="https://www.wolai.com/2PQzFg1Hg7pb8oV5zd7Est" target="_blank">前推后</a></li>
+                            <li><a href="https://www.wolai.com/nZqDADr86QDUQ6So9XMw9C" target="_blank">后推前</a></li>
+                            <li><a href="https://www.wolai.com/i1jDAZZcAkPv7LfGjcTxiq" target="_blank">且和或</a></li>
+                            <li><a href="https://www.wolai.com/f1isT89tXfH6m4DmgHMcCi" target="_blank">摩根定律</a></li>
+                            <li><a href="https://www.wolai.com/sdhp7LRFP7X1H4B746GfpM" target="_blank">近义反义</a></li>
+                            <li><a href="https://www.wolai.com/pJnM4CAi51KCEXTGN7ZNxj" target="_blank">比喻象征义</a></li>
+                            <li><a href="https://www.wolai.com/pvtA7mUstT8wY2jF7pyi2T" target="_blank">逻辑关系</a></li>
+                            <li><a href="https://www.wolai.com/d1b6MH7u1zqamVgUTBYMdN" target="_blank">语法关系</a></li>
+                            <li><a href="https://www.wolai.com/dKZoN5yh6wXcZG2HovsXC2" target="_blank">拆分思维</a></li>
+                            <li><a href="https://www.wolai.com/kxo5qehUYJFPeAKynVjdxj" target="_blank">排除法</a></li>
+                            <li><a href="https://www.wolai.com/uUnJBpT3bjND5X7egr7Mh2" target="_blank">代入法</a></li>
+                            <li><a href="https://www.wolai.com/3KxTTALT4o1rYuUG74hpet" target="_blank">最大信息法</a></li>
+                            <li><a href="https://www.wolai.com/s6XzmqsSHLrJyDySvfBUSo" target="_blank">假设法</a></li>
+                            <li><a href="https://www.wolai.com/t2gnt1pjpmi1teRTLz8waH" target="_blank">日常结论</a></li>
+                            <li><a href="https://www.wolai.com/g8L33buhpVTGrfm73mpJ5U" target="_blank">主客体解题</a></li>
+                            <li><a href="https://www.wolai.com/aw2TUucAQvAiZPCUQHdbiU" target="_blank">句式解题</a></li>
+                            <li><a href="https://www.wolai.com/2UsJcbEYvbuAhPSQdQyX5u" target="_blank">解释说明解题</a></li>
+                            <li><a href="https://www.wolai.com/sdkjrkDNRduGTYF8vvEyhA" target="_blank">多定义</a></li>
+                            <li><a href="https://www.wolai.com/u4wwKeSWqhDmR1KW2RvtXj" target="_blank">做题技巧</a></li>
+                            <li><a href="https://www.wolai.com/do8rroMw7Niicav6Y545nT" target="_blank">找论点论据</a></li>
+                            <li><a href="https://www.wolai.com/wvYP4sJRRMJbScVvWtqyit" target="_blank">削弱</a></li>
+                            <li><a href="https://www.wolai.com/nVtw7VhLk5GtJnVpP1m8yu" target="_blank">加强</a></li>
+                            <li><a href="https://www.wolai.com/3RKnPhQHo6iMx3vffovg4t" target="_blank">原因解释</a></li>
+                            <li><a href="https://www.wolai.com/6ixuWA1Hc4bmCs4CdNpKEx" target="_blank">词义侧重</a></li>
+                            <li><a href="https://www.wolai.com/oPrDFNg8vN9c2wPLKoNz6A" target="_blank">固定搭配</a></li>
+                            <li><a href="https://www.wolai.com/7DrkoLamNWnXXDW6JGQzxo" target="_blank">程度轻重</a></li>
+                            <li><a href="https://www.wolai.com/weqkjxCMKLiHhUY2BhX4EC" target="_blank">感情色彩</a></li>
+                            <li><a href="https://www.wolai.com/7EGJijWvvUPvHALHMymPK1" target="_blank">转折关系</a></li>
+                            <li><a href="https://www.wolai.com/8a6KAyYDNz9d1JPgetdVY5" target="_blank">因果关系</a></li>
+                            <li><a href="https://www.wolai.com/chFWToJawM4ZJuGi6RfjFW" target="_blank">并列关系</a></li>
+                            <li><a href="https://www.wolai.com/wszPYMnJe1vrGmJSkdWxFx" target="_blank">解释类对应</a></li>
+                            <li><a href="https://www.wolai.com/3YXz4KELZ8hhuZi8px41YT" target="_blank">重点词句 - 形象表达</a></li>
+                            <li><a href="https://www.wolai.com/7KKtBjnkuG8WguMJ2auY1v" target="_blank">重点词句 - 指代词</a></li>
+                            <li><a href="https://www.wolai.com/mcDdZ3Ycu3j1ru3oTNCSN8" target="_blank">重点词句 - 主题词</a></li>
+                            <li><a href="https://www.wolai.com/tQz4GqQEQvcqT2PmvT7cjy" target="_blank">重点词句 - 前后呼应</a></li>
+                            <li><a href="https://www.wolai.com/wSJ75GWMKMisLvoLFGxxeH" target="_blank">转折关联词</a></li>
+                            <li><a href="https://www.wolai.com/3ThavVqZ64mjLmLfoqfuvk" target="_blank">因果关联词</a></li>
+                            <li><a href="https://www.wolai.com/phzkKmjcAR47hJw2dt2VTG" target="_blank">重点词语 - 主题词</a></li>
+                            <li><a href="https://www.wolai.com/mDVnXJCDh4jS1dmD55d6GV" target="_blank">重点词句 - 程度词</a></li>
+                            <li><a href="https://www.wolai.com/xyLMJ6EnAtzyBVTyRGWPkf" target="_blank">必要条件关系</a></li>
+                            <li><a href="https://www.wolai.com/kryZDpMfURTSEboosw98qw" target="_blank">并列关系</a></li>
+                            <li><a href="https://www.wolai.com/dXxrMygkHZRA4S1V8PpzuE" target="_blank">结论提示词</a></li>
+                            <li><a href="https://www.wolai.com/2bEGpkT8XW1q7gv3vVVuqs" target="_blank">中心 - 对策最常考</a></li>
+                            <li><a href="https://www.wolai.com/3b9Etgc1eKBU4r72umNxQu" target="_blank">中心 - 识别不明确选项</a></li>
+                            <li><a href="https://www.wolai.com/imBSZdZZWDKkRKosoDNHEq" target="_blank">中心 - 反面论证</a></li>
+                            <li><a href="https://www.wolai.com/b8remqbqE7MWrNfcM4VCR2" target="_blank">中心 - 常见错误选项</a></li>
+                            <li><a href="https://www.wolai.com/pfntGBTLSUNSsyVp7bp8jU" target="_blank">中心 - 形象化表达</a></li>
+                            <li><a href="https://www.wolai.com/jfQy2YFYDXgzECAwDHwaL7" target="_blank">行文脉络</a></li>
+                            <li><a href="https://www.wolai.com/9RLiifMrEbDPPhTJrRjaB1" target="_blank">语句排序</a></li>
+                            <li><a href="https://www.wolai.com/3vYqsCZJQ5yiuBS2JYybvV" target="_blank">确定捆绑集团</a></li>
+                            <li><a href="https://www.wolai.com/NQeX7jporvwL6bE6MmXLg" target="_blank">确定顺序</a></li>
+                            <li><a href="https://www.wolai.com/qQ96W7LmeNvbm4H3o5AnMp" target="_blank">确定尾句</a></li>
+                            <li><a href="https://www.wolai.com/gYud3TzX2v9zwbxez6ymga" target="_blank">基础知识方法</a></li>
+                            <li><a href="https://www.wolai.com/h1UHtHdysP5ggNGANp5JUr" target="_blank">细节 - 常见错误选项</a></li>
+                            <li><a href="https://www.wolai.com/5tiTT7UHqqhPX83SFBruV" target="_blank">细节 - 快速解题技巧</a></li>
+                            <li><a href="https://www.wolai.com/bNEkU4pRkuLNFNVJpZinRz" target="_blank">横线在结尾</a></li>
+                            <li><a href="https://www.wolai.com/dd6rnCVKNRpseKmaBcALeC" target="_blank">横线在开头</a></li>
+                            <li><a href="https://www.wolai.com/oHMuuNP6oDHBbYKsLDPVHk" target="_blank">横线在中间</a></li>
+                            <li><a href="https://www.wolai.com/dhfvLpqAZ5Zk5RRYka75As" target="_blank">基础知识题型</a></li>
+                            <li><a href="https://www.wolai.com/aW4kkPqygdpsnEycfVQ3iK" target="_blank">中心 - 对策最常考</a></li>
+                            <li><a href="https://www.wolai.com/goofekWtbDj7FkKBvLV9tf" target="_blank">中心 - 识别不明确选项</a></li>
+                            <li><a href="https://www.wolai.com/6ioSw3mycM68tXmeZRKLj9" target="_blank">中心 - 反面论证</a></li>
+                            <li><a href="https://www.wolai.com/iWJmzv1K7nWmxxiDs1bdT2" target="_blank">中心 - 常见错误选项</a></li>
+                            <li><a href="https://www.wolai.com/4x7pXV3uSeiFsKszFnxMcj" target="_blank">中心 - 形象化表达</a></li>
+                            <li><a href="https://www.wolai.com/rFZbXBuqUrVaydBEBFUfHX" target="_blank">细节 - 常见错误选项</a></li>
+                            <li><a href="https://www.wolai.com/r7NSqMgBrvEtcchsx7efAe" target="_blank">细节 - 快速解题技巧</a></li>
+                            <li><a href="https://www.wolai.com/sx8ieSY4vMpq3NTiRvhsJk" target="_blank">同义表述</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category-card category-9">
+                    <div class="category-header" onclick="toggleCategory(this)">📋 备考</div>
+                    <div class="category-content">
+                        <ul class="resource-list">
+							<li><a href="https://www.wolai.com/c7UTu2MSf4vHaFMD8NDHEM" target="_blank">🤒 坑点总结</a></li>
+                            <li><a href="https://www.wolai.com/gn7XUqFkDGLw22UjAogfry" target="_blank">小胡老师的人民日报精读</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleCategory(header) {
+            const card = header.parentElement;
+            card.classList.toggle('collapsed');
+        }
+		function isMobile() {
+			const regex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+			return regex.test(navigator.userAgent);
+		}
+		if(isMobile()){		
+			for(i=0;i<9;i++){
+				toggleCategory(document.querySelector(".category-card.category-"+(i+1)+" .category-header"))
+			}
+		}
+    </script>
+</body>
+</html>
+</html>
